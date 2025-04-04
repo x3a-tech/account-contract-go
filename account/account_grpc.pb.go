@@ -19,16 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Users_IdentifyTelegram_FullMethodName = "/users.Users/IdentifyTelegram"
-	Users_GetAccountShort_FullMethodName  = "/users.Users/GetAccountShort"
+	Users_TryRegistryFromTelegram_FullMethodName = "/users.Users/TryRegistryFromTelegram"
 )
 
 // UsersClient is the client API for Users service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
-	IdentifyTelegram(ctx context.Context, in *IdentifyTelegramRequest, opts ...grpc.CallOption) (*Account, error)
-	GetAccountShort(ctx context.Context, in *GetAccountShortRequest, opts ...grpc.CallOption) (*AccountShort, error)
+	TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramRequest, opts ...grpc.CallOption) (*Account, error)
 }
 
 type usersClient struct {
@@ -39,20 +37,10 @@ func NewUsersClient(cc grpc.ClientConnInterface) UsersClient {
 	return &usersClient{cc}
 }
 
-func (c *usersClient) IdentifyTelegram(ctx context.Context, in *IdentifyTelegramRequest, opts ...grpc.CallOption) (*Account, error) {
+func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramRequest, opts ...grpc.CallOption) (*Account, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Account)
-	err := c.cc.Invoke(ctx, Users_IdentifyTelegram_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *usersClient) GetAccountShort(ctx context.Context, in *GetAccountShortRequest, opts ...grpc.CallOption) (*AccountShort, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AccountShort)
-	err := c.cc.Invoke(ctx, Users_GetAccountShort_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Users_TryRegistryFromTelegram_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,8 +51,7 @@ func (c *usersClient) GetAccountShort(ctx context.Context, in *GetAccountShortRe
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility.
 type UsersServer interface {
-	IdentifyTelegram(context.Context, *IdentifyTelegramRequest) (*Account, error)
-	GetAccountShort(context.Context, *GetAccountShortRequest) (*AccountShort, error)
+	TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramRequest) (*Account, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -75,11 +62,8 @@ type UsersServer interface {
 // pointer dereference when methods are called.
 type UnimplementedUsersServer struct{}
 
-func (UnimplementedUsersServer) IdentifyTelegram(context.Context, *IdentifyTelegramRequest) (*Account, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IdentifyTelegram not implemented")
-}
-func (UnimplementedUsersServer) GetAccountShort(context.Context, *GetAccountShortRequest) (*AccountShort, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAccountShort not implemented")
+func (UnimplementedUsersServer) TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramRequest) (*Account, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TryRegistryFromTelegram not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
 func (UnimplementedUsersServer) testEmbeddedByValue()               {}
@@ -102,38 +86,20 @@ func RegisterUsersServer(s grpc.ServiceRegistrar, srv UsersServer) {
 	s.RegisterService(&Users_ServiceDesc, srv)
 }
 
-func _Users_IdentifyTelegram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IdentifyTelegramRequest)
+func _Users_TryRegistryFromTelegram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TryRegistryFromTelegramRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsersServer).IdentifyTelegram(ctx, in)
+		return srv.(UsersServer).TryRegistryFromTelegram(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Users_IdentifyTelegram_FullMethodName,
+		FullMethod: Users_TryRegistryFromTelegram_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).IdentifyTelegram(ctx, req.(*IdentifyTelegramRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Users_GetAccountShort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAccountShortRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsersServer).GetAccountShort(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Users_GetAccountShort_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).GetAccountShort(ctx, req.(*GetAccountShortRequest))
+		return srv.(UsersServer).TryRegistryFromTelegram(ctx, req.(*TryRegistryFromTelegramRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -146,12 +112,8 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UsersServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "IdentifyTelegram",
-			Handler:    _Users_IdentifyTelegram_Handler,
-		},
-		{
-			MethodName: "GetAccountShort",
-			Handler:    _Users_GetAccountShort_Handler,
+			MethodName: "TryRegistryFromTelegram",
+			Handler:    _Users_TryRegistryFromTelegram_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
