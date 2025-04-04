@@ -26,7 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
-	TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramRequest, opts ...grpc.CallOption) (*Account, error)
+	TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*Account, error)
 }
 
 type usersClient struct {
@@ -37,7 +37,7 @@ func NewUsersClient(cc grpc.ClientConnInterface) UsersClient {
 	return &usersClient{cc}
 }
 
-func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramRequest, opts ...grpc.CallOption) (*Account, error) {
+func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*Account, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Account)
 	err := c.cc.Invoke(ctx, Users_TryRegistryFromTelegram_FullMethodName, in, out, cOpts...)
@@ -51,7 +51,7 @@ func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegist
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility.
 type UsersServer interface {
-	TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramRequest) (*Account, error)
+	TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*Account, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -62,7 +62,7 @@ type UsersServer interface {
 // pointer dereference when methods are called.
 type UnimplementedUsersServer struct{}
 
-func (UnimplementedUsersServer) TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramRequest) (*Account, error) {
+func (UnimplementedUsersServer) TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TryRegistryFromTelegram not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
@@ -87,7 +87,7 @@ func RegisterUsersServer(s grpc.ServiceRegistrar, srv UsersServer) {
 }
 
 func _Users_TryRegistryFromTelegram_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TryRegistryFromTelegramRequest)
+	in := new(TryRegistryFromTelegramParams)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func _Users_TryRegistryFromTelegram_Handler(srv interface{}, ctx context.Context
 		FullMethod: Users_TryRegistryFromTelegram_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsersServer).TryRegistryFromTelegram(ctx, req.(*TryRegistryFromTelegramRequest))
+		return srv.(UsersServer).TryRegistryFromTelegram(ctx, req.(*TryRegistryFromTelegramParams))
 	}
 	return interceptor(ctx, in, info, handler)
 }
