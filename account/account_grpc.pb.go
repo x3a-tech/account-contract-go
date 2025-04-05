@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -26,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
-	TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*Account, error)
+	TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type usersClient struct {
@@ -37,9 +38,9 @@ func NewUsersClient(cc grpc.ClientConnInterface) UsersClient {
 	return &usersClient{cc}
 }
 
-func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*Account, error) {
+func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Account)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Users_TryRegistryFromTelegram_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -51,7 +52,7 @@ func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegist
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility.
 type UsersServer interface {
-	TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*Account, error)
+	TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*emptypb.Empty, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -62,7 +63,7 @@ type UsersServer interface {
 // pointer dereference when methods are called.
 type UnimplementedUsersServer struct{}
 
-func (UnimplementedUsersServer) TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*Account, error) {
+func (UnimplementedUsersServer) TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TryRegistryFromTelegram not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
