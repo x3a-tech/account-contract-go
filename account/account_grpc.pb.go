@@ -22,6 +22,12 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Users_TryRegistryFromTelegram_FullMethodName = "/users.Users/TryRegistryFromTelegram"
 	Users_GetAccountShort_FullMethodName         = "/users.Users/GetAccountShort"
+	Users_GetFavorites_FullMethodName            = "/users.Users/GetFavorites"
+	Users_HasFavorites_FullMethodName            = "/users.Users/HasFavorites"
+	Users_ToggleFavorite_FullMethodName          = "/users.Users/ToggleFavorite"
+	Users_MoveFavorite_FullMethodName            = "/users.Users/MoveFavorite"
+	Users_CreateFavoriteFolder_FullMethodName    = "/users.Users/CreateFavoriteFolder"
+	Users_UpdateFavoriteFolder_FullMethodName    = "/users.Users/UpdateFavoriteFolder"
 )
 
 // UsersClient is the client API for Users service.
@@ -30,6 +36,12 @@ const (
 type UsersClient interface {
 	TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAccountShort(ctx context.Context, in *GetAccountParams, opts ...grpc.CallOption) (*AccountShort, error)
+	GetFavorites(ctx context.Context, in *GetFavoritesParams, opts ...grpc.CallOption) (*GetFavoritesResponse, error)
+	HasFavorites(ctx context.Context, in *HasFavoritesParams, opts ...grpc.CallOption) (*HasFavoritesResponse, error)
+	ToggleFavorite(ctx context.Context, in *ToggleFavoriteParams, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	MoveFavorite(ctx context.Context, in *MoveFavoriteParams, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateFavoriteFolder(ctx context.Context, in *CreateFavoriteFolderParams, opts ...grpc.CallOption) (*FavoriteFolder, error)
+	UpdateFavoriteFolder(ctx context.Context, in *UpdateFavoriteFolderParams, opts ...grpc.CallOption) (*FavoriteFolder, error)
 }
 
 type usersClient struct {
@@ -60,12 +72,78 @@ func (c *usersClient) GetAccountShort(ctx context.Context, in *GetAccountParams,
 	return out, nil
 }
 
+func (c *usersClient) GetFavorites(ctx context.Context, in *GetFavoritesParams, opts ...grpc.CallOption) (*GetFavoritesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetFavoritesResponse)
+	err := c.cc.Invoke(ctx, Users_GetFavorites_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) HasFavorites(ctx context.Context, in *HasFavoritesParams, opts ...grpc.CallOption) (*HasFavoritesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HasFavoritesResponse)
+	err := c.cc.Invoke(ctx, Users_HasFavorites_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) ToggleFavorite(ctx context.Context, in *ToggleFavoriteParams, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Users_ToggleFavorite_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) MoveFavorite(ctx context.Context, in *MoveFavoriteParams, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Users_MoveFavorite_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) CreateFavoriteFolder(ctx context.Context, in *CreateFavoriteFolderParams, opts ...grpc.CallOption) (*FavoriteFolder, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FavoriteFolder)
+	err := c.cc.Invoke(ctx, Users_CreateFavoriteFolder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usersClient) UpdateFavoriteFolder(ctx context.Context, in *UpdateFavoriteFolderParams, opts ...grpc.CallOption) (*FavoriteFolder, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FavoriteFolder)
+	err := c.cc.Invoke(ctx, Users_UpdateFavoriteFolder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsersServer is the server API for Users service.
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility.
 type UsersServer interface {
 	TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*emptypb.Empty, error)
 	GetAccountShort(context.Context, *GetAccountParams) (*AccountShort, error)
+	GetFavorites(context.Context, *GetFavoritesParams) (*GetFavoritesResponse, error)
+	HasFavorites(context.Context, *HasFavoritesParams) (*HasFavoritesResponse, error)
+	ToggleFavorite(context.Context, *ToggleFavoriteParams) (*emptypb.Empty, error)
+	MoveFavorite(context.Context, *MoveFavoriteParams) (*emptypb.Empty, error)
+	CreateFavoriteFolder(context.Context, *CreateFavoriteFolderParams) (*FavoriteFolder, error)
+	UpdateFavoriteFolder(context.Context, *UpdateFavoriteFolderParams) (*FavoriteFolder, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -81,6 +159,24 @@ func (UnimplementedUsersServer) TryRegistryFromTelegram(context.Context, *TryReg
 }
 func (UnimplementedUsersServer) GetAccountShort(context.Context, *GetAccountParams) (*AccountShort, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountShort not implemented")
+}
+func (UnimplementedUsersServer) GetFavorites(context.Context, *GetFavoritesParams) (*GetFavoritesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFavorites not implemented")
+}
+func (UnimplementedUsersServer) HasFavorites(context.Context, *HasFavoritesParams) (*HasFavoritesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HasFavorites not implemented")
+}
+func (UnimplementedUsersServer) ToggleFavorite(context.Context, *ToggleFavoriteParams) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ToggleFavorite not implemented")
+}
+func (UnimplementedUsersServer) MoveFavorite(context.Context, *MoveFavoriteParams) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MoveFavorite not implemented")
+}
+func (UnimplementedUsersServer) CreateFavoriteFolder(context.Context, *CreateFavoriteFolderParams) (*FavoriteFolder, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateFavoriteFolder not implemented")
+}
+func (UnimplementedUsersServer) UpdateFavoriteFolder(context.Context, *UpdateFavoriteFolderParams) (*FavoriteFolder, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFavoriteFolder not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
 func (UnimplementedUsersServer) testEmbeddedByValue()               {}
@@ -139,6 +235,114 @@ func _Users_GetAccountShort_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Users_GetFavorites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFavoritesParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).GetFavorites(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_GetFavorites_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).GetFavorites(ctx, req.(*GetFavoritesParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_HasFavorites_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HasFavoritesParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).HasFavorites(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_HasFavorites_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).HasFavorites(ctx, req.(*HasFavoritesParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_ToggleFavorite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ToggleFavoriteParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).ToggleFavorite(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_ToggleFavorite_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).ToggleFavorite(ctx, req.(*ToggleFavoriteParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_MoveFavorite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MoveFavoriteParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).MoveFavorite(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_MoveFavorite_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).MoveFavorite(ctx, req.(*MoveFavoriteParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_CreateFavoriteFolder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateFavoriteFolderParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).CreateFavoriteFolder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_CreateFavoriteFolder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).CreateFavoriteFolder(ctx, req.(*CreateFavoriteFolderParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Users_UpdateFavoriteFolder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFavoriteFolderParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).UpdateFavoriteFolder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_UpdateFavoriteFolder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).UpdateFavoriteFolder(ctx, req.(*UpdateFavoriteFolderParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Users_ServiceDesc is the grpc.ServiceDesc for Users service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -153,6 +357,30 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAccountShort",
 			Handler:    _Users_GetAccountShort_Handler,
+		},
+		{
+			MethodName: "GetFavorites",
+			Handler:    _Users_GetFavorites_Handler,
+		},
+		{
+			MethodName: "HasFavorites",
+			Handler:    _Users_HasFavorites_Handler,
+		},
+		{
+			MethodName: "ToggleFavorite",
+			Handler:    _Users_ToggleFavorite_Handler,
+		},
+		{
+			MethodName: "MoveFavorite",
+			Handler:    _Users_MoveFavorite_Handler,
+		},
+		{
+			MethodName: "CreateFavoriteFolder",
+			Handler:    _Users_CreateFavoriteFolder_Handler,
+		},
+		{
+			MethodName: "UpdateFavoriteFolder",
+			Handler:    _Users_UpdateFavoriteFolder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
