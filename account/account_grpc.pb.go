@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	Users_TryRegistryFromTelegram_FullMethodName = "/users.Users/TryRegistryFromTelegram"
+	Users_GetAccountShort_FullMethodName         = "/users.Users/GetAccountShort"
 )
 
 // UsersClient is the client API for Users service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsersClient interface {
 	TryRegistryFromTelegram(ctx context.Context, in *TryRegistryFromTelegramParams, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetAccountShort(ctx context.Context, in *GetAccountParams, opts ...grpc.CallOption) (*AccountShort, error)
 }
 
 type usersClient struct {
@@ -48,11 +50,22 @@ func (c *usersClient) TryRegistryFromTelegram(ctx context.Context, in *TryRegist
 	return out, nil
 }
 
+func (c *usersClient) GetAccountShort(ctx context.Context, in *GetAccountParams, opts ...grpc.CallOption) (*AccountShort, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AccountShort)
+	err := c.cc.Invoke(ctx, Users_GetAccountShort_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UsersServer is the server API for Users service.
 // All implementations must embed UnimplementedUsersServer
 // for forward compatibility.
 type UsersServer interface {
 	TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*emptypb.Empty, error)
+	GetAccountShort(context.Context, *GetAccountParams) (*AccountShort, error)
 	mustEmbedUnimplementedUsersServer()
 }
 
@@ -65,6 +78,9 @@ type UnimplementedUsersServer struct{}
 
 func (UnimplementedUsersServer) TryRegistryFromTelegram(context.Context, *TryRegistryFromTelegramParams) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TryRegistryFromTelegram not implemented")
+}
+func (UnimplementedUsersServer) GetAccountShort(context.Context, *GetAccountParams) (*AccountShort, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountShort not implemented")
 }
 func (UnimplementedUsersServer) mustEmbedUnimplementedUsersServer() {}
 func (UnimplementedUsersServer) testEmbeddedByValue()               {}
@@ -105,6 +121,24 @@ func _Users_TryRegistryFromTelegram_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Users_GetAccountShort_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountParams)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsersServer).GetAccountShort(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Users_GetAccountShort_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsersServer).GetAccountShort(ctx, req.(*GetAccountParams))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Users_ServiceDesc is the grpc.ServiceDesc for Users service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -115,6 +149,10 @@ var Users_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TryRegistryFromTelegram",
 			Handler:    _Users_TryRegistryFromTelegram_Handler,
+		},
+		{
+			MethodName: "GetAccountShort",
+			Handler:    _Users_GetAccountShort_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
