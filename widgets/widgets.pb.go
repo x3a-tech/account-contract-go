@@ -525,6 +525,58 @@ func (x *UpdateWidgetCc) GetValue() float64 {
 	return 0
 }
 
+type UpdateBatchWidgetCc struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	WidgetUuid    []byte                 `protobuf:"bytes,1,opt,name=widget_uuid,json=widgetUuid,proto3" json:"widget_uuid,omitempty"`
+	Values        []*WidgetCc            `protobuf:"bytes,2,rep,name=values,proto3" json:"values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateBatchWidgetCc) Reset() {
+	*x = UpdateBatchWidgetCc{}
+	mi := &file_widgets_widgets_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateBatchWidgetCc) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateBatchWidgetCc) ProtoMessage() {}
+
+func (x *UpdateBatchWidgetCc) ProtoReflect() protoreflect.Message {
+	mi := &file_widgets_widgets_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateBatchWidgetCc.ProtoReflect.Descriptor instead.
+func (*UpdateBatchWidgetCc) Descriptor() ([]byte, []int) {
+	return file_widgets_widgets_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateBatchWidgetCc) GetWidgetUuid() []byte {
+	if x != nil {
+		return x.WidgetUuid
+	}
+	return nil
+}
+
+func (x *UpdateBatchWidgetCc) GetValues() []*WidgetCc {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
 var File_widgets_widgets_proto protoreflect.FileDescriptor
 
 var file_widgets_widgets_proto_rawDesc = string([]byte{
@@ -576,12 +628,18 @@ var file_widgets_widgets_proto_rawDesc = string([]byte{
 	0x01, 0x28, 0x0c, 0x52, 0x0a, 0x77, 0x69, 0x64, 0x67, 0x65, 0x74, 0x55, 0x75, 0x69, 0x64, 0x12,
 	0x17, 0x0a, 0x07, 0x63, 0x6f, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05,
 	0x52, 0x06, 0x63, 0x6f, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75,
-	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x2a, 0x2a,
-	0x0a, 0x0a, 0x57, 0x69, 0x64, 0x67, 0x65, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x08, 0x0a, 0x04,
-	0x4e, 0x55, 0x4c, 0x4c, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d,
-	0x10, 0x01, 0x12, 0x06, 0x0a, 0x02, 0x43, 0x63, 0x10, 0x02, 0x42, 0x17, 0x5a, 0x15, 0x78, 0x33,
-	0x61, 0x2e, 0x77, 0x69, 0x64, 0x67, 0x65, 0x74, 0x73, 0x3b, 0x77, 0x69, 0x64, 0x67, 0x65, 0x74,
-	0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x61,
+	0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x42, 0x61, 0x74, 0x63, 0x68, 0x57, 0x69, 0x64,
+	0x67, 0x65, 0x74, 0x43, 0x63, 0x12, 0x1f, 0x0a, 0x0b, 0x77, 0x69, 0x64, 0x67, 0x65, 0x74, 0x5f,
+	0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0a, 0x77, 0x69, 0x64, 0x67,
+	0x65, 0x74, 0x55, 0x75, 0x69, 0x64, 0x12, 0x29, 0x0a, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x73,
+	0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x77, 0x69, 0x64, 0x67, 0x65, 0x74, 0x73,
+	0x2e, 0x57, 0x69, 0x64, 0x67, 0x65, 0x74, 0x43, 0x63, 0x52, 0x06, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x73, 0x2a, 0x2a, 0x0a, 0x0a, 0x57, 0x69, 0x64, 0x67, 0x65, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12,
+	0x08, 0x0a, 0x04, 0x4e, 0x55, 0x4c, 0x4c, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x75, 0x73,
+	0x74, 0x6f, 0x6d, 0x10, 0x01, 0x12, 0x06, 0x0a, 0x02, 0x43, 0x63, 0x10, 0x02, 0x42, 0x17, 0x5a,
+	0x15, 0x78, 0x33, 0x61, 0x2e, 0x77, 0x69, 0x64, 0x67, 0x65, 0x74, 0x73, 0x3b, 0x77, 0x69, 0x64,
+	0x67, 0x65, 0x74, 0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -597,7 +655,7 @@ func file_widgets_widgets_proto_rawDescGZIP() []byte {
 }
 
 var file_widgets_widgets_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_widgets_widgets_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_widgets_widgets_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_widgets_widgets_proto_goTypes = []any{
 	(WidgetType)(0),               // 0: widgets.WidgetType
 	(*GetWidgetsParams)(nil),      // 1: widgets.GetWidgetsParams
@@ -608,21 +666,23 @@ var file_widgets_widgets_proto_goTypes = []any{
 	(*WidgetListCc)(nil),          // 6: widgets.WidgetListCc
 	(*WidgetCc)(nil),              // 7: widgets.WidgetCc
 	(*UpdateWidgetCc)(nil),        // 8: widgets.UpdateWidgetCc
-	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
+	(*UpdateBatchWidgetCc)(nil),   // 9: widgets.UpdateBatchWidgetCc
+	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
 }
 var file_widgets_widgets_proto_depIdxs = []int32{
-	5, // 0: widgets.GetWidgetsResponse.widgets:type_name -> widgets.Widget
-	0, // 1: widgets.CreateWidgetParams.type:type_name -> widgets.WidgetType
-	5, // 2: widgets.CreateWidgetResponse.widget:type_name -> widgets.Widget
-	0, // 3: widgets.Widget.type:type_name -> widgets.WidgetType
-	9, // 4: widgets.Widget.created_at:type_name -> google.protobuf.Timestamp
-	6, // 5: widgets.Widget.cc:type_name -> widgets.WidgetListCc
-	7, // 6: widgets.WidgetListCc.list:type_name -> widgets.WidgetCc
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	5,  // 0: widgets.GetWidgetsResponse.widgets:type_name -> widgets.Widget
+	0,  // 1: widgets.CreateWidgetParams.type:type_name -> widgets.WidgetType
+	5,  // 2: widgets.CreateWidgetResponse.widget:type_name -> widgets.Widget
+	0,  // 3: widgets.Widget.type:type_name -> widgets.WidgetType
+	10, // 4: widgets.Widget.created_at:type_name -> google.protobuf.Timestamp
+	6,  // 5: widgets.Widget.cc:type_name -> widgets.WidgetListCc
+	7,  // 6: widgets.WidgetListCc.list:type_name -> widgets.WidgetCc
+	7,  // 7: widgets.UpdateBatchWidgetCc.values:type_name -> widgets.WidgetCc
+	8,  // [8:8] is the sub-list for method output_type
+	8,  // [8:8] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_widgets_widgets_proto_init() }
@@ -639,7 +699,7 @@ func file_widgets_widgets_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_widgets_widgets_proto_rawDesc), len(file_widgets_widgets_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
