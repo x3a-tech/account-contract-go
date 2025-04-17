@@ -71,10 +71,65 @@ func (Method) EnumDescriptor() ([]byte, []int) {
 	return file_account_account_proto_rawDescGZIP(), []int{0}
 }
 
+type MarketType int32
+
+const (
+	MarketType_MARKET_TYPE_UNDEFINED MarketType = 0
+	MarketType_Crypto                MarketType = 1
+	MarketType_Fiat                  MarketType = 2
+	MarketType_Forex                 MarketType = 3
+	MarketType_Stock                 MarketType = 4
+)
+
+// Enum value maps for MarketType.
+var (
+	MarketType_name = map[int32]string{
+		0: "MARKET_TYPE_UNDEFINED",
+		1: "Crypto",
+		2: "Fiat",
+		3: "Forex",
+		4: "Stock",
+	}
+	MarketType_value = map[string]int32{
+		"MARKET_TYPE_UNDEFINED": 0,
+		"Crypto":                1,
+		"Fiat":                  2,
+		"Forex":                 3,
+		"Stock":                 4,
+	}
+)
+
+func (x MarketType) Enum() *MarketType {
+	p := new(MarketType)
+	*p = x
+	return p
+}
+
+func (x MarketType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (MarketType) Descriptor() protoreflect.EnumDescriptor {
+	return file_account_account_proto_enumTypes[1].Descriptor()
+}
+
+func (MarketType) Type() protoreflect.EnumType {
+	return &file_account_account_proto_enumTypes[1]
+}
+
+func (x MarketType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use MarketType.Descriptor instead.
+func (MarketType) EnumDescriptor() ([]byte, []int) {
+	return file_account_account_proto_rawDescGZIP(), []int{1}
+}
+
 type Profile struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Account       *Account               `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
-	FeedCoins     []int32                `protobuf:"varint,2,rep,packed,name=feed_coins,json=feedCoins,proto3" json:"feed_coins,omitempty"`
+	FeedCoins     []*FeedCoin            `protobuf:"bytes,2,rep,name=feed_coins,json=feedCoins,proto3" json:"feed_coins,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -116,11 +171,71 @@ func (x *Profile) GetAccount() *Account {
 	return nil
 }
 
-func (x *Profile) GetFeedCoins() []int32 {
+func (x *Profile) GetFeedCoins() []*FeedCoin {
 	if x != nil {
 		return x.FeedCoins
 	}
 	return nil
+}
+
+type FeedCoin struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CoinId        int32                  `protobuf:"varint,1,opt,name=coin_id,json=coinId,proto3" json:"coin_id,omitempty"`
+	Order         int32                  `protobuf:"varint,2,opt,name=order,proto3" json:"order,omitempty"`
+	MarketType    MarketType             `protobuf:"varint,3,opt,name=market_type,json=marketType,proto3,enum=users.MarketType" json:"market_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FeedCoin) Reset() {
+	*x = FeedCoin{}
+	mi := &file_account_account_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FeedCoin) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FeedCoin) ProtoMessage() {}
+
+func (x *FeedCoin) ProtoReflect() protoreflect.Message {
+	mi := &file_account_account_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FeedCoin.ProtoReflect.Descriptor instead.
+func (*FeedCoin) Descriptor() ([]byte, []int) {
+	return file_account_account_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *FeedCoin) GetCoinId() int32 {
+	if x != nil {
+		return x.CoinId
+	}
+	return 0
+}
+
+func (x *FeedCoin) GetOrder() int32 {
+	if x != nil {
+		return x.Order
+	}
+	return 0
+}
+
+func (x *FeedCoin) GetMarketType() MarketType {
+	if x != nil {
+		return x.MarketType
+	}
+	return MarketType_MARKET_TYPE_UNDEFINED
 }
 
 type Account struct {
@@ -139,7 +254,7 @@ type Account struct {
 
 func (x *Account) Reset() {
 	*x = Account{}
-	mi := &file_account_account_proto_msgTypes[1]
+	mi := &file_account_account_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -151,7 +266,7 @@ func (x *Account) String() string {
 func (*Account) ProtoMessage() {}
 
 func (x *Account) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[1]
+	mi := &file_account_account_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -164,7 +279,7 @@ func (x *Account) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Account.ProtoReflect.Descriptor instead.
 func (*Account) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{1}
+	return file_account_account_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Account) GetUuid() []byte {
@@ -236,7 +351,7 @@ type AccountShort struct {
 
 func (x *AccountShort) Reset() {
 	*x = AccountShort{}
-	mi := &file_account_account_proto_msgTypes[2]
+	mi := &file_account_account_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -248,7 +363,7 @@ func (x *AccountShort) String() string {
 func (*AccountShort) ProtoMessage() {}
 
 func (x *AccountShort) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[2]
+	mi := &file_account_account_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -261,7 +376,7 @@ func (x *AccountShort) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccountShort.ProtoReflect.Descriptor instead.
 func (*AccountShort) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{2}
+	return file_account_account_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AccountShort) GetUuid() []byte {
@@ -314,7 +429,7 @@ type TryRegistryFromTelegramParams struct {
 
 func (x *TryRegistryFromTelegramParams) Reset() {
 	*x = TryRegistryFromTelegramParams{}
-	mi := &file_account_account_proto_msgTypes[3]
+	mi := &file_account_account_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -326,7 +441,7 @@ func (x *TryRegistryFromTelegramParams) String() string {
 func (*TryRegistryFromTelegramParams) ProtoMessage() {}
 
 func (x *TryRegistryFromTelegramParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[3]
+	mi := &file_account_account_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -339,7 +454,7 @@ func (x *TryRegistryFromTelegramParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TryRegistryFromTelegramParams.ProtoReflect.Descriptor instead.
 func (*TryRegistryFromTelegramParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{3}
+	return file_account_account_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *TryRegistryFromTelegramParams) GetTgId() int64 {
@@ -400,7 +515,7 @@ type GetAccountParams struct {
 
 func (x *GetAccountParams) Reset() {
 	*x = GetAccountParams{}
-	mi := &file_account_account_proto_msgTypes[4]
+	mi := &file_account_account_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -412,7 +527,7 @@ func (x *GetAccountParams) String() string {
 func (*GetAccountParams) ProtoMessage() {}
 
 func (x *GetAccountParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[4]
+	mi := &file_account_account_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -425,7 +540,7 @@ func (x *GetAccountParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAccountParams.ProtoReflect.Descriptor instead.
 func (*GetAccountParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{4}
+	return file_account_account_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetAccountParams) GetUuid() []byte {
@@ -446,7 +561,7 @@ type FavoriteFolder struct {
 
 func (x *FavoriteFolder) Reset() {
 	*x = FavoriteFolder{}
-	mi := &file_account_account_proto_msgTypes[5]
+	mi := &file_account_account_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -458,7 +573,7 @@ func (x *FavoriteFolder) String() string {
 func (*FavoriteFolder) ProtoMessage() {}
 
 func (x *FavoriteFolder) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[5]
+	mi := &file_account_account_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -471,7 +586,7 @@ func (x *FavoriteFolder) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FavoriteFolder.ProtoReflect.Descriptor instead.
 func (*FavoriteFolder) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{5}
+	return file_account_account_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *FavoriteFolder) GetUuid() []byte {
@@ -505,7 +620,7 @@ type GetFavoritesParams struct {
 
 func (x *GetFavoritesParams) Reset() {
 	*x = GetFavoritesParams{}
-	mi := &file_account_account_proto_msgTypes[6]
+	mi := &file_account_account_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -517,7 +632,7 @@ func (x *GetFavoritesParams) String() string {
 func (*GetFavoritesParams) ProtoMessage() {}
 
 func (x *GetFavoritesParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[6]
+	mi := &file_account_account_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -530,7 +645,7 @@ func (x *GetFavoritesParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFavoritesParams.ProtoReflect.Descriptor instead.
 func (*GetFavoritesParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{6}
+	return file_account_account_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetFavoritesParams) GetAccountUuid() []byte {
@@ -557,7 +672,7 @@ type GetFavoritesResponse struct {
 
 func (x *GetFavoritesResponse) Reset() {
 	*x = GetFavoritesResponse{}
-	mi := &file_account_account_proto_msgTypes[7]
+	mi := &file_account_account_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -569,7 +684,7 @@ func (x *GetFavoritesResponse) String() string {
 func (*GetFavoritesResponse) ProtoMessage() {}
 
 func (x *GetFavoritesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[7]
+	mi := &file_account_account_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -582,7 +697,7 @@ func (x *GetFavoritesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetFavoritesResponse.ProtoReflect.Descriptor instead.
 func (*GetFavoritesResponse) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{7}
+	return file_account_account_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetFavoritesResponse) GetFavorites() []*FavoriteFolder {
@@ -609,7 +724,7 @@ type HasFavoritesParams struct {
 
 func (x *HasFavoritesParams) Reset() {
 	*x = HasFavoritesParams{}
-	mi := &file_account_account_proto_msgTypes[8]
+	mi := &file_account_account_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -621,7 +736,7 @@ func (x *HasFavoritesParams) String() string {
 func (*HasFavoritesParams) ProtoMessage() {}
 
 func (x *HasFavoritesParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[8]
+	mi := &file_account_account_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -634,7 +749,7 @@ func (x *HasFavoritesParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HasFavoritesParams.ProtoReflect.Descriptor instead.
 func (*HasFavoritesParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{8}
+	return file_account_account_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *HasFavoritesParams) GetAccountUuid() []byte {
@@ -660,7 +775,7 @@ type HasFavoritesResponse struct {
 
 func (x *HasFavoritesResponse) Reset() {
 	*x = HasFavoritesResponse{}
-	mi := &file_account_account_proto_msgTypes[9]
+	mi := &file_account_account_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -672,7 +787,7 @@ func (x *HasFavoritesResponse) String() string {
 func (*HasFavoritesResponse) ProtoMessage() {}
 
 func (x *HasFavoritesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[9]
+	mi := &file_account_account_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -685,7 +800,7 @@ func (x *HasFavoritesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HasFavoritesResponse.ProtoReflect.Descriptor instead.
 func (*HasFavoritesResponse) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{9}
+	return file_account_account_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *HasFavoritesResponse) GetFavorites() map[string]bool {
@@ -706,7 +821,7 @@ type ToggleFavoriteParams struct {
 
 func (x *ToggleFavoriteParams) Reset() {
 	*x = ToggleFavoriteParams{}
-	mi := &file_account_account_proto_msgTypes[10]
+	mi := &file_account_account_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -718,7 +833,7 @@ func (x *ToggleFavoriteParams) String() string {
 func (*ToggleFavoriteParams) ProtoMessage() {}
 
 func (x *ToggleFavoriteParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[10]
+	mi := &file_account_account_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -731,7 +846,7 @@ func (x *ToggleFavoriteParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ToggleFavoriteParams.ProtoReflect.Descriptor instead.
 func (*ToggleFavoriteParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{10}
+	return file_account_account_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ToggleFavoriteParams) GetAccountUuid() []byte {
@@ -766,7 +881,7 @@ type MoveFavoriteParams struct {
 
 func (x *MoveFavoriteParams) Reset() {
 	*x = MoveFavoriteParams{}
-	mi := &file_account_account_proto_msgTypes[11]
+	mi := &file_account_account_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -778,7 +893,7 @@ func (x *MoveFavoriteParams) String() string {
 func (*MoveFavoriteParams) ProtoMessage() {}
 
 func (x *MoveFavoriteParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[11]
+	mi := &file_account_account_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -791,7 +906,7 @@ func (x *MoveFavoriteParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MoveFavoriteParams.ProtoReflect.Descriptor instead.
 func (*MoveFavoriteParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{11}
+	return file_account_account_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *MoveFavoriteParams) GetAccountUuid() []byte {
@@ -826,7 +941,7 @@ type CreateFavoriteFolderParams struct {
 
 func (x *CreateFavoriteFolderParams) Reset() {
 	*x = CreateFavoriteFolderParams{}
-	mi := &file_account_account_proto_msgTypes[12]
+	mi := &file_account_account_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -838,7 +953,7 @@ func (x *CreateFavoriteFolderParams) String() string {
 func (*CreateFavoriteFolderParams) ProtoMessage() {}
 
 func (x *CreateFavoriteFolderParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[12]
+	mi := &file_account_account_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -851,7 +966,7 @@ func (x *CreateFavoriteFolderParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateFavoriteFolderParams.ProtoReflect.Descriptor instead.
 func (*CreateFavoriteFolderParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{12}
+	return file_account_account_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CreateFavoriteFolderParams) GetAccountUuid() []byte {
@@ -886,7 +1001,7 @@ type UpdateFavoriteFolderParams struct {
 
 func (x *UpdateFavoriteFolderParams) Reset() {
 	*x = UpdateFavoriteFolderParams{}
-	mi := &file_account_account_proto_msgTypes[13]
+	mi := &file_account_account_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -898,7 +1013,7 @@ func (x *UpdateFavoriteFolderParams) String() string {
 func (*UpdateFavoriteFolderParams) ProtoMessage() {}
 
 func (x *UpdateFavoriteFolderParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[13]
+	mi := &file_account_account_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -911,7 +1026,7 @@ func (x *UpdateFavoriteFolderParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateFavoriteFolderParams.ProtoReflect.Descriptor instead.
 func (*UpdateFavoriteFolderParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{13}
+	return file_account_account_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *UpdateFavoriteFolderParams) GetUuid() []byte {
@@ -945,7 +1060,7 @@ type Onboarding struct {
 
 func (x *Onboarding) Reset() {
 	*x = Onboarding{}
-	mi := &file_account_account_proto_msgTypes[14]
+	mi := &file_account_account_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -957,7 +1072,7 @@ func (x *Onboarding) String() string {
 func (*Onboarding) ProtoMessage() {}
 
 func (x *Onboarding) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[14]
+	mi := &file_account_account_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -970,7 +1085,7 @@ func (x *Onboarding) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Onboarding.ProtoReflect.Descriptor instead.
 func (*Onboarding) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{14}
+	return file_account_account_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Onboarding) GetCategories() []int32 {
@@ -997,7 +1112,7 @@ type CheckNewsInfoParams struct {
 
 func (x *CheckNewsInfoParams) Reset() {
 	*x = CheckNewsInfoParams{}
-	mi := &file_account_account_proto_msgTypes[15]
+	mi := &file_account_account_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1009,7 +1124,7 @@ func (x *CheckNewsInfoParams) String() string {
 func (*CheckNewsInfoParams) ProtoMessage() {}
 
 func (x *CheckNewsInfoParams) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[15]
+	mi := &file_account_account_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1022,7 +1137,7 @@ func (x *CheckNewsInfoParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckNewsInfoParams.ProtoReflect.Descriptor instead.
 func (*CheckNewsInfoParams) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{15}
+	return file_account_account_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *CheckNewsInfoParams) GetSubscribes() [][]byte {
@@ -1049,7 +1164,7 @@ type CheckNewsInfoResponse struct {
 
 func (x *CheckNewsInfoResponse) Reset() {
 	*x = CheckNewsInfoResponse{}
-	mi := &file_account_account_proto_msgTypes[16]
+	mi := &file_account_account_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1061,7 +1176,7 @@ func (x *CheckNewsInfoResponse) String() string {
 func (*CheckNewsInfoResponse) ProtoMessage() {}
 
 func (x *CheckNewsInfoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_account_account_proto_msgTypes[16]
+	mi := &file_account_account_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1074,7 +1189,7 @@ func (x *CheckNewsInfoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckNewsInfoResponse.ProtoReflect.Descriptor instead.
 func (*CheckNewsInfoResponse) Descriptor() ([]byte, []int) {
-	return file_account_account_proto_rawDescGZIP(), []int{16}
+	return file_account_account_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *CheckNewsInfoResponse) GetSubscribes() [][]byte {
@@ -1097,12 +1212,20 @@ var file_account_account_proto_rawDesc = string([]byte{
 	0x0a, 0x15, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x2f, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e,
 	0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x05, 0x75, 0x73, 0x65, 0x72, 0x73, 0x1a, 0x1b,
 	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f,
-	0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x52, 0x0a, 0x07, 0x50,
+	0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x63, 0x0a, 0x07, 0x50,
 	0x72, 0x6f, 0x66, 0x69, 0x6c, 0x65, 0x12, 0x28, 0x0a, 0x07, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e,
 	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e,
 	0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x07, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74,
-	0x12, 0x1d, 0x0a, 0x0a, 0x66, 0x65, 0x65, 0x64, 0x5f, 0x63, 0x6f, 0x69, 0x6e, 0x73, 0x18, 0x02,
-	0x20, 0x03, 0x28, 0x05, 0x52, 0x09, 0x66, 0x65, 0x65, 0x64, 0x43, 0x6f, 0x69, 0x6e, 0x73, 0x22,
+	0x12, 0x2e, 0x0a, 0x0a, 0x66, 0x65, 0x65, 0x64, 0x5f, 0x63, 0x6f, 0x69, 0x6e, 0x73, 0x18, 0x02,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x46, 0x65, 0x65,
+	0x64, 0x43, 0x6f, 0x69, 0x6e, 0x52, 0x09, 0x66, 0x65, 0x65, 0x64, 0x43, 0x6f, 0x69, 0x6e, 0x73,
+	0x22, 0x6d, 0x0a, 0x08, 0x46, 0x65, 0x65, 0x64, 0x43, 0x6f, 0x69, 0x6e, 0x12, 0x17, 0x0a, 0x07,
+	0x63, 0x6f, 0x69, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x63,
+	0x6f, 0x69, 0x6e, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x05, 0x6f, 0x72, 0x64, 0x65, 0x72, 0x12, 0x32, 0x0a, 0x0b, 0x6d,
+	0x61, 0x72, 0x6b, 0x65, 0x74, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0e,
+	0x32, 0x11, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x54,
+	0x79, 0x70, 0x65, 0x52, 0x0a, 0x6d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x54, 0x79, 0x70, 0x65, 0x22,
 	0x81, 0x02, 0x0a, 0x07, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x75,
 	0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12,
 	0x1a, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28,
@@ -1233,47 +1356,53 @@ var file_account_account_proto_rawDesc = string([]byte{
 	0x74, 0x65, 0x73, 0x2a, 0x37, 0x0a, 0x06, 0x4d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x12, 0x08, 0x0a,
 	0x04, 0x4e, 0x55, 0x4c, 0x4c, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x49, 0x44, 0x45, 0x4e, 0x54,
 	0x49, 0x46, 0x59, 0x10, 0x01, 0x12, 0x15, 0x0a, 0x11, 0x47, 0x45, 0x54, 0x5f, 0x41, 0x43, 0x43,
-	0x4f, 0x55, 0x4e, 0x54, 0x5f, 0x53, 0x48, 0x4f, 0x52, 0x54, 0x10, 0x02, 0x32, 0xdf, 0x04, 0x0a,
-	0x05, 0x55, 0x73, 0x65, 0x72, 0x73, 0x12, 0x57, 0x0a, 0x17, 0x54, 0x72, 0x79, 0x52, 0x65, 0x67,
-	0x69, 0x73, 0x74, 0x72, 0x79, 0x46, 0x72, 0x6f, 0x6d, 0x54, 0x65, 0x6c, 0x65, 0x67, 0x72, 0x61,
-	0x6d, 0x12, 0x24, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x54, 0x72, 0x79, 0x52, 0x65, 0x67,
-	0x69, 0x73, 0x74, 0x72, 0x79, 0x46, 0x72, 0x6f, 0x6d, 0x54, 0x65, 0x6c, 0x65, 0x67, 0x72, 0x61,
-	0x6d, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
+	0x4f, 0x55, 0x4e, 0x54, 0x5f, 0x53, 0x48, 0x4f, 0x52, 0x54, 0x10, 0x02, 0x2a, 0x53, 0x0a, 0x0a,
+	0x4d, 0x61, 0x72, 0x6b, 0x65, 0x74, 0x54, 0x79, 0x70, 0x65, 0x12, 0x19, 0x0a, 0x15, 0x4d, 0x41,
+	0x52, 0x4b, 0x45, 0x54, 0x5f, 0x54, 0x59, 0x50, 0x45, 0x5f, 0x55, 0x4e, 0x44, 0x45, 0x46, 0x49,
+	0x4e, 0x45, 0x44, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x10,
+	0x01, 0x12, 0x08, 0x0a, 0x04, 0x46, 0x69, 0x61, 0x74, 0x10, 0x02, 0x12, 0x09, 0x0a, 0x05, 0x46,
+	0x6f, 0x72, 0x65, 0x78, 0x10, 0x03, 0x12, 0x09, 0x0a, 0x05, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x10,
+	0x04, 0x32, 0xdf, 0x04, 0x0a, 0x05, 0x55, 0x73, 0x65, 0x72, 0x73, 0x12, 0x57, 0x0a, 0x17, 0x54,
+	0x72, 0x79, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x72, 0x79, 0x46, 0x72, 0x6f, 0x6d, 0x54, 0x65,
+	0x6c, 0x65, 0x67, 0x72, 0x61, 0x6d, 0x12, 0x24, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x54,
+	0x72, 0x79, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x72, 0x79, 0x46, 0x72, 0x6f, 0x6d, 0x54, 0x65,
+	0x6c, 0x65, 0x67, 0x72, 0x61, 0x6d, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x16, 0x2e, 0x67,
+	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45,
+	0x6d, 0x70, 0x74, 0x79, 0x12, 0x3f, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x53, 0x68, 0x6f, 0x72, 0x74, 0x12, 0x17, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e,
+	0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x1a, 0x13, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74,
+	0x53, 0x68, 0x6f, 0x72, 0x74, 0x12, 0x46, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x46, 0x61, 0x76, 0x6f,
+	0x72, 0x69, 0x74, 0x65, 0x73, 0x12, 0x19, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x47, 0x65,
+	0x74, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73,
+	0x1a, 0x1b, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x46, 0x61, 0x76, 0x6f,
+	0x72, 0x69, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46, 0x0a,
+	0x0c, 0x48, 0x61, 0x73, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73, 0x12, 0x19, 0x2e,
+	0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x48, 0x61, 0x73, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74,
+	0x65, 0x73, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x1b, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73,
+	0x2e, 0x48, 0x61, 0x73, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x45, 0x0a, 0x0e, 0x54, 0x6f, 0x67, 0x67, 0x6c, 0x65, 0x46,
+	0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x12, 0x1b, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e,
+	0x54, 0x6f, 0x67, 0x67, 0x6c, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x50, 0x61,
+	0x72, 0x61, 0x6d, 0x73, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x41, 0x0a, 0x0c,
+	0x4d, 0x6f, 0x76, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x12, 0x19, 0x2e, 0x75,
+	0x73, 0x65, 0x72, 0x73, 0x2e, 0x4d, 0x6f, 0x76, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74,
+	0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x12,
-	0x3f, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x53, 0x68, 0x6f,
-	0x72, 0x74, 0x12, 0x17, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x63,
-	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x13, 0x2e, 0x75, 0x73,
-	0x65, 0x72, 0x73, 0x2e, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x53, 0x68, 0x6f, 0x72, 0x74,
-	0x12, 0x46, 0x0a, 0x0c, 0x47, 0x65, 0x74, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73,
-	0x12, 0x19, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x46, 0x61, 0x76, 0x6f,
-	0x72, 0x69, 0x74, 0x65, 0x73, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x1b, 0x2e, 0x75, 0x73,
-	0x65, 0x72, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x46, 0x0a, 0x0c, 0x48, 0x61, 0x73, 0x46,
-	0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73, 0x12, 0x19, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73,
-	0x2e, 0x48, 0x61, 0x73, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73, 0x50, 0x61, 0x72,
-	0x61, 0x6d, 0x73, 0x1a, 0x1b, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x48, 0x61, 0x73, 0x46,
-	0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x12, 0x45, 0x0a, 0x0e, 0x54, 0x6f, 0x67, 0x67, 0x6c, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69,
-	0x74, 0x65, 0x12, 0x1b, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x54, 0x6f, 0x67, 0x67, 0x6c,
-	0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a,
-	0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
-	0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x41, 0x0a, 0x0c, 0x4d, 0x6f, 0x76, 0x65, 0x46,
-	0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x12, 0x19, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e,
-	0x4d, 0x6f, 0x76, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x50, 0x61, 0x72, 0x61,
-	0x6d, 0x73, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x50, 0x0a, 0x14, 0x43, 0x72,
-	0x65, 0x61, 0x74, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c, 0x64,
-	0x65, 0x72, 0x12, 0x21, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
-	0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x50,
-	0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x15, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x46, 0x61,
-	0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x12, 0x50, 0x0a, 0x14,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f,
-	0x6c, 0x64, 0x65, 0x72, 0x12, 0x21, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e, 0x55, 0x70, 0x64,
-	0x61, 0x74, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65,
-	0x72, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x15, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e,
-	0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x42, 0x17,
-	0x5a, 0x15, 0x78, 0x33, 0x61, 0x2e, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x3b, 0x61, 0x63,
-	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x50, 0x0a, 0x14, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74,
+	0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x12, 0x21, 0x2e, 0x75, 0x73, 0x65, 0x72, 0x73, 0x2e,
+	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f,
+	0x6c, 0x64, 0x65, 0x72, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x15, 0x2e, 0x75, 0x73, 0x65,
+	0x72, 0x73, 0x2e, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65,
+	0x72, 0x12, 0x50, 0x0a, 0x14, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72,
+	0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x12, 0x21, 0x2e, 0x75, 0x73, 0x65, 0x72,
+	0x73, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65,
+	0x46, 0x6f, 0x6c, 0x64, 0x65, 0x72, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x1a, 0x15, 0x2e, 0x75,
+	0x73, 0x65, 0x72, 0x73, 0x2e, 0x46, 0x61, 0x76, 0x6f, 0x72, 0x69, 0x74, 0x65, 0x46, 0x6f, 0x6c,
+	0x64, 0x65, 0x72, 0x42, 0x17, 0x5a, 0x15, 0x78, 0x33, 0x61, 0x2e, 0x61, 0x63, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x3b, 0x61, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (
@@ -1288,55 +1417,59 @@ func file_account_account_proto_rawDescGZIP() []byte {
 	return file_account_account_proto_rawDescData
 }
 
-var file_account_account_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_account_account_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
+var file_account_account_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_account_account_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_account_account_proto_goTypes = []any{
 	(Method)(0),                           // 0: users.Method
-	(*Profile)(nil),                       // 1: users.Profile
-	(*Account)(nil),                       // 2: users.Account
-	(*AccountShort)(nil),                  // 3: users.AccountShort
-	(*TryRegistryFromTelegramParams)(nil), // 4: users.TryRegistryFromTelegramParams
-	(*GetAccountParams)(nil),              // 5: users.GetAccountParams
-	(*FavoriteFolder)(nil),                // 6: users.FavoriteFolder
-	(*GetFavoritesParams)(nil),            // 7: users.GetFavoritesParams
-	(*GetFavoritesResponse)(nil),          // 8: users.GetFavoritesResponse
-	(*HasFavoritesParams)(nil),            // 9: users.HasFavoritesParams
-	(*HasFavoritesResponse)(nil),          // 10: users.HasFavoritesResponse
-	(*ToggleFavoriteParams)(nil),          // 11: users.ToggleFavoriteParams
-	(*MoveFavoriteParams)(nil),            // 12: users.MoveFavoriteParams
-	(*CreateFavoriteFolderParams)(nil),    // 13: users.CreateFavoriteFolderParams
-	(*UpdateFavoriteFolderParams)(nil),    // 14: users.UpdateFavoriteFolderParams
-	(*Onboarding)(nil),                    // 15: users.Onboarding
-	(*CheckNewsInfoParams)(nil),           // 16: users.CheckNewsInfoParams
-	(*CheckNewsInfoResponse)(nil),         // 17: users.CheckNewsInfoResponse
-	nil,                                   // 18: users.HasFavoritesResponse.FavoritesEntry
-	(*emptypb.Empty)(nil),                 // 19: google.protobuf.Empty
+	(MarketType)(0),                       // 1: users.MarketType
+	(*Profile)(nil),                       // 2: users.Profile
+	(*FeedCoin)(nil),                      // 3: users.FeedCoin
+	(*Account)(nil),                       // 4: users.Account
+	(*AccountShort)(nil),                  // 5: users.AccountShort
+	(*TryRegistryFromTelegramParams)(nil), // 6: users.TryRegistryFromTelegramParams
+	(*GetAccountParams)(nil),              // 7: users.GetAccountParams
+	(*FavoriteFolder)(nil),                // 8: users.FavoriteFolder
+	(*GetFavoritesParams)(nil),            // 9: users.GetFavoritesParams
+	(*GetFavoritesResponse)(nil),          // 10: users.GetFavoritesResponse
+	(*HasFavoritesParams)(nil),            // 11: users.HasFavoritesParams
+	(*HasFavoritesResponse)(nil),          // 12: users.HasFavoritesResponse
+	(*ToggleFavoriteParams)(nil),          // 13: users.ToggleFavoriteParams
+	(*MoveFavoriteParams)(nil),            // 14: users.MoveFavoriteParams
+	(*CreateFavoriteFolderParams)(nil),    // 15: users.CreateFavoriteFolderParams
+	(*UpdateFavoriteFolderParams)(nil),    // 16: users.UpdateFavoriteFolderParams
+	(*Onboarding)(nil),                    // 17: users.Onboarding
+	(*CheckNewsInfoParams)(nil),           // 18: users.CheckNewsInfoParams
+	(*CheckNewsInfoResponse)(nil),         // 19: users.CheckNewsInfoResponse
+	nil,                                   // 20: users.HasFavoritesResponse.FavoritesEntry
+	(*emptypb.Empty)(nil),                 // 21: google.protobuf.Empty
 }
 var file_account_account_proto_depIdxs = []int32{
-	2,  // 0: users.Profile.account:type_name -> users.Account
-	6,  // 1: users.GetFavoritesResponse.favorites:type_name -> users.FavoriteFolder
-	18, // 2: users.HasFavoritesResponse.favorites:type_name -> users.HasFavoritesResponse.FavoritesEntry
-	4,  // 3: users.Users.TryRegistryFromTelegram:input_type -> users.TryRegistryFromTelegramParams
-	5,  // 4: users.Users.GetAccountShort:input_type -> users.GetAccountParams
-	7,  // 5: users.Users.GetFavorites:input_type -> users.GetFavoritesParams
-	9,  // 6: users.Users.HasFavorites:input_type -> users.HasFavoritesParams
-	11, // 7: users.Users.ToggleFavorite:input_type -> users.ToggleFavoriteParams
-	12, // 8: users.Users.MoveFavorite:input_type -> users.MoveFavoriteParams
-	13, // 9: users.Users.CreateFavoriteFolder:input_type -> users.CreateFavoriteFolderParams
-	14, // 10: users.Users.UpdateFavoriteFolder:input_type -> users.UpdateFavoriteFolderParams
-	19, // 11: users.Users.TryRegistryFromTelegram:output_type -> google.protobuf.Empty
-	3,  // 12: users.Users.GetAccountShort:output_type -> users.AccountShort
-	8,  // 13: users.Users.GetFavorites:output_type -> users.GetFavoritesResponse
-	10, // 14: users.Users.HasFavorites:output_type -> users.HasFavoritesResponse
-	19, // 15: users.Users.ToggleFavorite:output_type -> google.protobuf.Empty
-	19, // 16: users.Users.MoveFavorite:output_type -> google.protobuf.Empty
-	6,  // 17: users.Users.CreateFavoriteFolder:output_type -> users.FavoriteFolder
-	6,  // 18: users.Users.UpdateFavoriteFolder:output_type -> users.FavoriteFolder
-	11, // [11:19] is the sub-list for method output_type
-	3,  // [3:11] is the sub-list for method input_type
-	3,  // [3:3] is the sub-list for extension type_name
-	3,  // [3:3] is the sub-list for extension extendee
-	0,  // [0:3] is the sub-list for field type_name
+	4,  // 0: users.Profile.account:type_name -> users.Account
+	3,  // 1: users.Profile.feed_coins:type_name -> users.FeedCoin
+	1,  // 2: users.FeedCoin.market_type:type_name -> users.MarketType
+	8,  // 3: users.GetFavoritesResponse.favorites:type_name -> users.FavoriteFolder
+	20, // 4: users.HasFavoritesResponse.favorites:type_name -> users.HasFavoritesResponse.FavoritesEntry
+	6,  // 5: users.Users.TryRegistryFromTelegram:input_type -> users.TryRegistryFromTelegramParams
+	7,  // 6: users.Users.GetAccountShort:input_type -> users.GetAccountParams
+	9,  // 7: users.Users.GetFavorites:input_type -> users.GetFavoritesParams
+	11, // 8: users.Users.HasFavorites:input_type -> users.HasFavoritesParams
+	13, // 9: users.Users.ToggleFavorite:input_type -> users.ToggleFavoriteParams
+	14, // 10: users.Users.MoveFavorite:input_type -> users.MoveFavoriteParams
+	15, // 11: users.Users.CreateFavoriteFolder:input_type -> users.CreateFavoriteFolderParams
+	16, // 12: users.Users.UpdateFavoriteFolder:input_type -> users.UpdateFavoriteFolderParams
+	21, // 13: users.Users.TryRegistryFromTelegram:output_type -> google.protobuf.Empty
+	5,  // 14: users.Users.GetAccountShort:output_type -> users.AccountShort
+	10, // 15: users.Users.GetFavorites:output_type -> users.GetFavoritesResponse
+	12, // 16: users.Users.HasFavorites:output_type -> users.HasFavoritesResponse
+	21, // 17: users.Users.ToggleFavorite:output_type -> google.protobuf.Empty
+	21, // 18: users.Users.MoveFavorite:output_type -> google.protobuf.Empty
+	8,  // 19: users.Users.CreateFavoriteFolder:output_type -> users.FavoriteFolder
+	8,  // 20: users.Users.UpdateFavoriteFolder:output_type -> users.FavoriteFolder
+	13, // [13:21] is the sub-list for method output_type
+	5,  // [5:13] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_account_account_proto_init() }
@@ -1344,19 +1477,19 @@ func file_account_account_proto_init() {
 	if File_account_account_proto != nil {
 		return
 	}
-	file_account_account_proto_msgTypes[1].OneofWrappers = []any{}
 	file_account_account_proto_msgTypes[2].OneofWrappers = []any{}
 	file_account_account_proto_msgTypes[3].OneofWrappers = []any{}
-	file_account_account_proto_msgTypes[6].OneofWrappers = []any{}
-	file_account_account_proto_msgTypes[10].OneofWrappers = []any{}
+	file_account_account_proto_msgTypes[4].OneofWrappers = []any{}
+	file_account_account_proto_msgTypes[7].OneofWrappers = []any{}
 	file_account_account_proto_msgTypes[11].OneofWrappers = []any{}
+	file_account_account_proto_msgTypes[12].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_account_account_proto_rawDesc), len(file_account_account_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   18,
+			NumEnums:      2,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
